@@ -1,4 +1,4 @@
-package evaluation;
+package groundtruth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,9 +49,12 @@ public abstract class GroundTruthProvider {
 		LOG.info("-------------------------------------");
 		LOG.info("Number of Roles Statistic");
 		LOG.info("-------------------------------------");
+		long sum = 0;
 		for (Entry<Category, Integer> entry : statistic.entrySet()) {
 			LOG.info(entry.getKey() + "==" + entry.getValue());
+			sum+=entry.getValue();
 		}
+		LOG.info("SUM=="+sum);
 		LOG.info("-------------------------------------");
 	}
 

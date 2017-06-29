@@ -2,8 +2,8 @@ package evaluationrunner;
 
 import dictionary.RoleListProvider;
 import dictionary.RoleListProviderFileBased;
-import evaluation.GroundTruthProvider;
-import evaluation.GroundTruthProviderFileBased;
+import groundtruth.GroundTruthProvider;
+import groundtruth.GroundTruthProviderFileBased;
 
 public class Evaluate {
 

@@ -1,4 +1,4 @@
-package evaluation;
+package groundtruth;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -39,7 +39,10 @@ public class GroundTruthParser {
 			final Node titleNode = docNode.getChildNodes().item(3);
 			final Node contentNode = docNode.getChildNodes().item(5);
 
-			groundTruthFile.setFullContent(contentNode.getTextContent().replaceAll("[\\t\\n\\r]", " ").trim());
+			final String fullTextCleaned = contentNode.getTextContent().replaceAll("[\\t\\n\\r]", " ").trim();
+			groundTruthFile.setFullContentPlain(fullTextCleaned);
+			groundTruthFile.executeFullContentNer();
+			groundTruthFile.executeFullContentNerStatistic();
 			groundTruthFile.setTime(timeNode.getTextContent());
 			groundTruthFile.setTitle(titleNode.getTextContent());
 
@@ -53,7 +56,7 @@ public class GroundTruthParser {
 					if (roleNode.getNodeType() == Node.ELEMENT_NODE && isValidTag(roleNode.getNodeName())) {
 						rolePhrase = roleNode.getTextContent();
 
-						final Position position = getStartAndEndPositions(rolePhrase, groundTruthFile.getFullContent());
+						final Position position = getStartAndEndPositions(rolePhrase, groundTruthFile.getFullContentPlain());
 						if (position == null) {
 							throw new IllegalArgumentException(
 									"Position can not be null. RolePhrase=" + rolePhrase + " filename=" + fileName);
@@ -186,7 +189,10 @@ public class GroundTruthParser {
 			final Node titleNode = docNode.getChildNodes().item(1);
 			final Node contentNode = docNode.getChildNodes().item(2);
 
-			groundTruthFile.setFullContent(contentNode.getTextContent());
+			final String fullTextCleaned = contentNode.getTextContent().replaceAll("[\\t\\n\\r]", " ").trim();
+			groundTruthFile.setFullContentPlain(fullTextCleaned);
+			groundTruthFile.executeFullContentNer();
+			groundTruthFile.executeFullContentNerStatistic();
 			groundTruthFile.setTime(timeNode.getTextContent());
 			groundTruthFile.setTitle(titleNode.getTextContent());
 

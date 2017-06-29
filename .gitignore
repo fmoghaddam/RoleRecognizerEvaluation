@@ -1,3 +1,7 @@
 /.gradle/
 /build/
 /bin/
+/src/main/resources/RoleDetectorResources.rar
+/src/main/resources/nermodel/*
+/src/main/resources/posmodel/*
+/src/main/resources/edu/*

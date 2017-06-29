@@ -1,6 +1,11 @@
+plugins {
+    id "de.undercouch.download" version "3.2.0"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
+apply plugin: 'de.undercouch.download'
 
 repositories {
     jcenter()
@@ -14,4 +19,21 @@ dependencies {
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
     testCompile 'junit:junit:4.12'
 	compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version: '3.7.0'
+}
+
+task unzip(type: Copy,dependsOn: ':downloadFile') {
+    def zipFile = file('src/main/resources/RoleDetectorResources.rar')
+    def outputDir = file('src/main/resources/')
+ 
+    from zipTree(zipFile)
+    into outputDir
+}
+
+import de.undercouch.gradle.tasks.download.Download
+
+task downloadFile(type: Download) {    
+   	src 'https://dl.dropboxusercontent.com/s/q2foq82lsuag6wq/resources.zip?dl=0'
+    dest 'src/main/resources/RoleDetectorResources.rar'
+    overwrite false
+    onlyIfNewer true
 }

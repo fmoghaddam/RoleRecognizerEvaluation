@@ -1,4 +1,4 @@
-package evaluation;
+package groundtruth;
 
 import java.io.File;
 
