@@ -21,11 +21,11 @@ public class RoleListProviderDummy extends RoleListProvider {
 		// Category.PRESIDENT_TAG);
 		// roleMap.put("1st president of the united states",
 		// Category.PRESIDENT_TAG);
-		roleMap.put("co-founders", new HashSet<>(Arrays.asList(Category.CEO_TAG)));
-		roleMap.put("president", new HashSet<>(Arrays.asList(Category.PRESIDENT_TAG)));
-		roleMap.put("The king", new HashSet<>(Arrays.asList(Category.KING_TAG, Category.CEO_TAG, Category.POPE_TAG)));
-		roleMap.put("AB", new HashSet<>(Arrays.asList(Category.KING_TAG, Category.CEO_TAG, Category.POPE_TAG)));
-		roleMap.put("king", new HashSet<>(Arrays.asList(Category.KING_TAG, Category.CEO_TAG)));
+		roleMapCaseSensitive.put("co-founders", new HashSet<>(Arrays.asList(Category.CEO_TAG)));
+		roleMapCaseSensitive.put("president", new HashSet<>(Arrays.asList(Category.PRESIDENT_TAG)));
+		roleMapCaseSensitive.put("The king", new HashSet<>(Arrays.asList(Category.KING_TAG, Category.CEO_TAG, Category.POPE_TAG)));
+		roleMapCaseSensitive.put("AB", new HashSet<>(Arrays.asList(Category.KING_TAG, Category.CEO_TAG, Category.POPE_TAG)));
+		roleMapCaseSensitive.put("king", new HashSet<>(Arrays.asList(Category.KING_TAG, Category.CEO_TAG)));
 		// roleMap.put("queen", new
 		// HashSet<>(Arrays.asList(Category.KING_TAG)));
 		// roleMap.put("CEO", new HashSet<>(Arrays.asList(Category.CEO_TAG)));
@@ -33,6 +33,6 @@ public class RoleListProviderDummy extends RoleListProvider {
 		// roleMap.put("POTOS", new
 		// HashSet<>(Arrays.asList(Category.TOPIC_TAG)));
 
-		sortBasedOnLenghth(Order.DESC);
+		sortBasedOnLength(Order.DESC);
 	}
 }

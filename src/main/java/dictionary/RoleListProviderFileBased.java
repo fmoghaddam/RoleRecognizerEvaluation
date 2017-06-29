@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 import model.Category;
 import model.Order;
@@ -28,14 +30,14 @@ public class RoleListProviderFileBased extends RoleListProvider {
 				BufferedReader br = new BufferedReader(new FileReader(DATA_FOLDER + File.separator + file));
 				String line;
 				while ((line = br.readLine()) != null) {
-					final Set<Category> categorySet = roleMap.get(line);
+					final Set<Category> categorySet = roleMapCaseSensitive.get(line);
 					if (categorySet == null || categorySet.isEmpty()) {
 						final Set<Category> catSet = new HashSet<>();
 						catSet.add(Category.resolve(file));
-						roleMap.put(line, catSet);
+						roleMapCaseSensitive.put(line, catSet);
 					} else {
 						categorySet.add(Category.resolve(file));
-						roleMap.put(line, categorySet);
+						roleMapCaseSensitive.put(line, categorySet);
 					}
 				}
 				br.close();
@@ -43,6 +45,17 @@ public class RoleListProviderFileBased extends RoleListProvider {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		sortBasedOnLenghth(Order.DESC);
+		
+		sortBasedOnLength(Order.DESC);
+		
+		roleMapCaseInsensitive.putAll(new TreeMap<>(roleMapCaseSensitive));
+		sortBasedOnLengthCaseInsensitive(Order.DESC);
+		
+		for(Entry<String, Set<Category>> entry:roleMapCaseSensitive.entrySet()){
+			if(entry.getKey().split(" ").length==1){
+				onlyHeadRoleMap.put(entry.getKey(), entry.getValue());
+			}
+		}
+		onlyHeadRoleMapInsensitive.putAll(new TreeMap<>(onlyHeadRoleMap));
 	}
 }

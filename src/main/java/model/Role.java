@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class Role {
 
-	private String rolePhrase;
-	private String headRole;
-	private Position rolePhrasePosition;
-	private Map<String, String> xmlAttributes;
+	private final String rolePhrase;
+	private final String headRole;
+	private final Position rolePhrasePosition;
+	private final Map<String, String> xmlAttributes;
 	
 	public Role(final String rolePhrase,final String headRole,final Position rolePhrasePosition,
 			final Map<String, String> xmlAttributes) {
@@ -44,12 +44,6 @@ public class Role {
 	public Position getRolePhasePosition() {
 		return rolePhrasePosition;
 	}
-
-
-	public void setRolePhasePosition(Position rolePhasePosition) {
-		this.rolePhrasePosition = rolePhasePosition;
-	}
-
 
 	public Map<String, String> getXmlAttributes() {
 		return xmlAttributes;
