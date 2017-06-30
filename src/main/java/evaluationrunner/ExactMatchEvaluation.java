@@ -126,7 +126,7 @@ public class ExactMatchEvaluation {
 
 				final String dictionaryRole = roleEntity.getKey();
 
-				final Pattern pattern = Pattern.compile("(?im)" + dictionaryRole);
+				final Pattern pattern = Pattern.compile("(?m)" + dictionaryRole);
 				final Matcher matcher = pattern.matcher(originalFullText);
 
 				while (matcher.find()) {
@@ -140,7 +140,7 @@ public class ExactMatchEvaluation {
 					boolean found = false;
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicate.contains(role.getHeadRole())) {
+							if (candicatePosition.contains(role.getHeadRolePosition())) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
@@ -186,7 +186,7 @@ public class ExactMatchEvaluation {
 				final String dictionaryRole = roleEntity.getKey();
 				final Set<Category> dictionaryCategories = roleEntity.getValue();
 
-				final Pattern pattern = Pattern.compile("(?im)" + dictionaryRole);
+				final Pattern pattern = Pattern.compile("(?m)" + dictionaryRole);
 				final Matcher matcher = pattern.matcher(originalFullText);
 
 				while (matcher.find()) {
@@ -200,7 +200,7 @@ public class ExactMatchEvaluation {
 					boolean found = false;
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicate.contains(role.getHeadRole())) {
+							if (candicatePosition.contains(role.getHeadRolePosition())) {
 								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
 								final Set<Category> intesection = hasIntersection(
 										new HashSet<>(Arrays.asList(category)), dictionaryCategories);
@@ -249,7 +249,7 @@ public class ExactMatchEvaluation {
 			final String originalFullText = groundTruthFile.getFullContentPlain();
 			final List<Role> groundTruthFileCopy = groundTruthFile.getRoles();
 			final List<Role> groundTruthFileCopyTemp = groundTruthFile.getRoles();
-			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseInsensitive()
+			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
 				final String dictionaryRole = roleEntity.getKey();
@@ -268,7 +268,7 @@ public class ExactMatchEvaluation {
 					boolean found = false;
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicate.toLowerCase().contains(role.getHeadRole().toLowerCase())) {
+							if (candicatePosition.contains(role.getHeadRolePosition())) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
@@ -308,7 +308,7 @@ public class ExactMatchEvaluation {
 			final String originalFullText = groundTruthFile.getFullContentPlain();
 			final List<Role> groundTruthFileCopy = groundTruthFile.getRoles();
 			final List<Role> groundTruthFileCopyTemp = groundTruthFile.getRoles();
-			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseInsensitive()
+			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
 				final String dictionaryRole = roleEntity.getKey();
@@ -328,7 +328,7 @@ public class ExactMatchEvaluation {
 					boolean found = false;
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicate.toLowerCase().contains(role.getHeadRole().toLowerCase())) {
+							if (candicatePosition.contains(role.getHeadRolePosition())) {
 								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
 								final Set<Category> intesection = hasIntersection(
 										new HashSet<>(Arrays.asList(category)), dictionaryCategories);

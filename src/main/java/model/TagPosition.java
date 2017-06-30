@@ -17,17 +17,25 @@ public class TagPosition extends Position {
 		return "TagPostion [tag=" + tag + ", toString()=" + super.toString() + "]";
 	}
 
-	public boolean hasOverlap(Position rolePhasePosition) {
-		if (this.getStartIndex() <= rolePhasePosition.getStartIndex()
-				&& this.getEndIndex() >= rolePhasePosition.getEndIndex()) {
+	public boolean hasOverlap(Position otherPosition) {
+		if (this.getStartIndex() <= otherPosition.getStartIndex()
+				&& this.getEndIndex() >= otherPosition.getEndIndex()) {
 			return true;
-		} else if (rolePhasePosition.getStartIndex() >= this.getStartIndex()
-				&& rolePhasePosition.getStartIndex() <= this.getEndIndex()) {
+		} else if (otherPosition.getStartIndex() >= this.getStartIndex()
+				&& otherPosition.getStartIndex() <= this.getEndIndex()) {
 			return true;
-		} else if (rolePhasePosition.getEndIndex() >= this.getStartIndex()
-				&& rolePhasePosition.getEndIndex() <= this.getEndIndex()) {
+		} else if (otherPosition.getEndIndex() >= this.getStartIndex()
+				&& otherPosition.getEndIndex() <= this.getEndIndex()) {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean contains(Position othrePosition) {
+		if(this.getStartIndex()<=othrePosition.getStartIndex() && this.getEndIndex()>=othrePosition.getEndIndex()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

@@ -15,11 +15,12 @@ public class Evaluate {
 		
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation();
-		exm.DictionaryCompletenessTestCaseSensitive();
-		exm.DictionaryCompletenessTestCaseInsensitive();
+		//exm.DictionaryCompletenessTestCaseSensitive();
+		//exm.DictionaryCompletenessTestCaseInsensitive();
 		exm.roleDetectionTestCaseSensitive();
-		exm.roleDitectionAndCategorizationTestCaseSensitive();
 		exm.roleDetectionTestCaseInSensitive();
+		
+		exm.roleDitectionAndCategorizationTestCaseSensitive();
 		exm.roleDitectionAndCategorizationTestCaseInSensitive();
 	}
 
