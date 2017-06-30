@@ -67,6 +67,7 @@ public class GroundTruthFile {
 		}
 		fullContentNerTagged = NERTagger.runTaggerString(fullContentPlain);
 	}
+	
 	public void executeFullContentNerStatistic() {
 		if(fullContentPlain==null){
 			throw new IllegalArgumentException("fullContentPlain is null");

@@ -33,7 +33,7 @@ public class NERTagger {
 	}
 
 	/**
-	 * Run NER and returns full XML
+	 * Run NER on plain text and returns full XML
 	 * 
 	 * @param text
 	 * @return
@@ -45,6 +45,12 @@ public class NERTagger {
 		return doc.toXML();
 	}
 
+	/**
+	 * Parse XML result of {@code runTaggerXML} function and returns
+	 * aggregated and filter statistic 
+	 * @param xml
+	 * @return
+	 */
 	public static Map<Integer, NerTag> nerXmlParser(final String xml) {
 		try {
 			Map<Integer, NerTag> result = new LinkedHashMap<>();
@@ -56,7 +62,7 @@ public class NERTagger {
 			final NodeList nodeList = document.getElementsByTagName("*");
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				final Node node = nodeList.item(i);
-				if (node.getNodeType() == Node.ELEMENT_NODE && isValidTag(node)) {
+				if (node.getNodeType() == Node.ELEMENT_NODE && isATokenTag(node)) {
 
 					String word = null;
 					String nerTag = null;
@@ -92,6 +98,11 @@ public class NERTagger {
 		return null;
 	}
 
+	/**
+	 * Filter the map and just keep NER tag
+	 * @param inputMap
+	 * @return
+	 */
 	private static Map<Integer, NerTag> filterOnlyValidNerTags(Map<Integer, NerTag> inputMap) {
 		final Map<Integer, NerTag> result = new LinkedHashMap<>();
 		for (Entry<Integer, NerTag> entry : inputMap.entrySet()) {
@@ -102,6 +113,12 @@ public class NERTagger {
 		return result;
 	}
 
+	/**
+	 * Aggregate tag position
+	 * e.g. Farshad Moghaddam ==> <PERSON> <PERSON> ==> <PERSON>
+	 * @param inputMap
+	 * @return
+	 */
 	private static Map<Integer, NerTag> aggregateTagPositions(final Map<Integer, NerTag> inputMap) {
 		final Map<Integer, NerTag> result = new LinkedHashMap<>();
 		final List<NerTag> tags = new ArrayList<>(inputMap.values());
@@ -136,7 +153,12 @@ public class NERTagger {
 //		}
 //	}
 
-	private static boolean isValidTag(Node node) {
+	/**
+	 * Only used for parsing Stanford CoreNlp XML result
+	 * @param node
+	 * @return
+	 */
+	private static boolean isATokenTag(Node node) {
 		if (node.getNodeName().equals("token")) {
 			return true;
 		} else {
@@ -144,9 +166,14 @@ public class NERTagger {
 		}
 	}
 
-	public static String runTaggerString(String fullContentPlain) {
-		StringBuilder result = new StringBuilder(fullContentPlain); 
-		final Map<Integer, NerTag> nerXmlParser = nerXmlParser(runTaggerXML(fullContentPlain));
+	/**
+	 * Run NER tagger on a plain text and return aggregated tagged string
+	 * @param plainText
+	 * @return
+	 */
+	public static String runTaggerString(String plainText) {
+		StringBuilder result = new StringBuilder(plainText); 
+		final Map<Integer, NerTag> nerXmlParser = nerXmlParser(runTaggerXML(plainText));
 		int offset = 0;
 		for(NerTag tag:nerXmlParser.values()){ 
 			result.replace(tag.getStartPosition()+offset, tag.getEndPosition()+offset, "<"+tag.getNerTag().text+">");
