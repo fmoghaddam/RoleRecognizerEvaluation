@@ -41,8 +41,8 @@ public class GroundTruthParser {
 
 			final String fullTextCleaned = contentNode.getTextContent().replaceAll("[\\t\\n\\r]", " ").trim();
 			groundTruthFile.setFullContentPlain(fullTextCleaned);
-			groundTruthFile.executeFullContentNer();
-			groundTruthFile.executeFullContentNerStatistic();
+			groundTruthFile.executeFullContentNer(null);
+			groundTruthFile.executeFullContentNerStatistic(null);
 			groundTruthFile.setTime(timeNode.getTextContent());
 			groundTruthFile.setTitle(titleNode.getTextContent());
 
@@ -191,8 +191,8 @@ public class GroundTruthParser {
 
 			final String fullTextCleaned = contentNode.getTextContent().replaceAll("[\\t\\n\\r]", " ").trim();
 			groundTruthFile.setFullContentPlain(fullTextCleaned);
-			groundTruthFile.executeFullContentNer();
-			groundTruthFile.executeFullContentNerStatistic();
+			groundTruthFile.executeFullContentNer(null);
+			groundTruthFile.executeFullContentNerStatistic(null);
 			groundTruthFile.setTime(timeNode.getTextContent());
 			groundTruthFile.setTitle(titleNode.getTextContent());
 

@@ -11,10 +11,8 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import dictionary.RoleListProvider;
-import dictionary.RoleListProviderFileBased;
 import groundtruth.GroundTruthFile;
 import groundtruth.GroundTruthProvider;
-import groundtruth.GroundTruthProviderFileBased;
 import metrics.FMeasure;
 import metrics.Precision;
 import metrics.Recall;
@@ -27,31 +25,52 @@ public class ExactMatchEvaluation {
 
 	private static Logger LOG = Logger.getLogger(ExactMatchEvaluation.class);
 
-	final Precision precision;
-	final Recall recall;
+	private final Precision precision;
+	private final Recall recall;
 
-	public ExactMatchEvaluation() {
+	private final RoleListProvider originalRoleProvider;
+	private final GroundTruthProvider groundTruthProvider;
+
+	public ExactMatchEvaluation(final RoleListProvider rlp, final GroundTruthProvider gtp) {
+		if(rlp == null){
+			throw new IllegalArgumentException("RoleListProvider is null");
+		}
+		if(gtp == null){
+			throw new IllegalArgumentException("GroundTruthProvider is null");
+		}
 		precision = new Precision();
 		recall = new Recall();
-
-		groundTruthProvider = new GroundTruthProviderFileBased();
-		originalRoleProvider = new RoleListProviderFileBased();
-
-		originalRoleProvider.loadRoles();
-		groundTruthProvider.loadData();
-
-		groundTruthProvider.printStatistic();
-		groundTruthProvider.printStatisticRolePhrase();
+		groundTruthProvider = gtp;
+		originalRoleProvider = rlp;
 	}
-
-	final RoleListProvider originalRoleProvider;
-	final GroundTruthProvider groundTruthProvider;
 
 	/**
 	 * Test dictionary completeness by checking all the roles from ground truth
 	 * against the dictionary. This function use CASE SENSITIVE dictionary.
 	 */
-	public void DictionaryCompletenessTestCaseSensitive() {
+	public void DictionaryCompletenessHeadRoleTestCaseSensitive() {
+		resetMetrics();
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final String candicateText = entry.getHeadRole();
+				final Set<Category> categories = originalRoleProvider.getRoleMapCaseSensitive().get(candicateText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					precision.addTruePositive();
+					recall.addTruePositive();
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessHeadRoleTest case sensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		LOG.info("--------------------------------------------");
+	}
+
+	public void DictionaryCompletenessHeadRoleCategoryTestCaseSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
@@ -72,7 +91,57 @@ public class ExactMatchEvaluation {
 			}
 
 		}
-		LOG.info("DictionaryCompletenessTest case sensitive:");
+		LOG.info("DictionaryCompletenessHeadRoleCategoryTest case sensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		LOG.info("--------------------------------------------");
+	}
+
+	public void DictionaryCompletenessRolePhraseTestCaseSensitive() {
+		resetMetrics();
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final String candicateText = entry.getRolePhrase();
+				final Set<Category> categories = originalRoleProvider.getRoleMapCaseSensitive().get(candicateText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					precision.addTruePositive();
+					recall.addTruePositive();
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessRolePhrase Test case sensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		LOG.info("--------------------------------------------");
+	}
+
+	public void DictionaryCompletenessRolePhraseCategoryTestCaseSensitive() {
+		resetMetrics();
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
+				final String candicateText = entry.getRolePhrase();
+				final Set<Category> categories = originalRoleProvider.getRoleMapCaseSensitive().get(candicateText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					final boolean hasIntesection = categories.contains(category);
+					if (hasIntesection) {
+						precision.addTruePositive();
+						recall.addTruePositive();
+					} else {
+						precision.addFalsePositive();
+					}
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessRolePhraseCategoryTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
 		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
@@ -83,7 +152,29 @@ public class ExactMatchEvaluation {
 	 * Test dictionary completeness by checking all the roles from ground truth
 	 * against the dictionary. This function use CASE INSENSITIVE dictionary.
 	 */
-	public void DictionaryCompletenessTestCaseInsensitive() {
+	public void DictionaryCompletenessHeadRoleTestCaseInsensitive() {
+		resetMetrics();
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final String candicateText = entry.getHeadRole();
+				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					precision.addTruePositive();
+					recall.addTruePositive();
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessHeadRoleTest case INsensitive :");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		LOG.info("--------------------------------------------");
+	}
+
+	public void DictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
@@ -104,7 +195,35 @@ public class ExactMatchEvaluation {
 			}
 
 		}
-		LOG.info("DictionaryCompletenessTest case INsensitive :");
+		LOG.info("DictionaryCompletenessHeadRoleCategoryTest case INsensitive :");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		LOG.info("--------------------------------------------");
+	}
+
+	public void DictionaryCompletenessRolePhraseTestCaseInsensitive() {
+		resetMetrics();
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
+				final String candicateText = entry.getRolePhrase();
+				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					final boolean hasIntesection = categories.contains(category);
+					if (hasIntesection) {
+						precision.addTruePositive();
+						recall.addTruePositive();
+					} else {
+						precision.addFalsePositive();
+					}
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessRolePhrase Test case INsensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
 		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());

@@ -92,4 +92,46 @@ public abstract class GroundTruthProvider {
 		}
 		LOG.info("-------------------------------------");
 	}
+
+	public void printStatisticHeadRole() {
+		final Map<Category, Map<String,Integer>> statistic = new HashMap<>();
+		for (final GroundTruthFile groundTruth : document) {
+			groundTruth.getRoles().forEach(p -> {
+				final Category resolveCategory = Category.resolve(p.getXmlAttributes().get("type").toLowerCase());
+				final Map<String, Integer> value = statistic.get(resolveCategory);
+				final String rolePhrase = p.getHeadRole().toLowerCase();
+				if (value == null) {
+					final Map<String,Integer> newMap = new HashMap<>();
+					newMap.put(rolePhrase,1);
+					statistic.put(resolveCategory, newMap);
+				} else {
+					
+					final Integer integer = value.get(rolePhrase);
+					if(integer==null){
+						value.put(rolePhrase, 1);
+					}else{
+						value.put(rolePhrase, integer+1);	
+					}
+					statistic.put(resolveCategory, value);
+				}
+			});
+		}
+		LOG.info("-------------------------------------");
+		LOG.info("Unique HeadRole Statistic");
+		LOG.info("-------------------------------------");
+		for (Entry<Category, Map<String, Integer>> entry : statistic.entrySet()) {
+			LOG.info(entry.getKey() + "==" + entry.getValue().size());
+//			for(Entry<String, Integer> ent:entry.getValue().entrySet()){
+//				LOG.info(ent.getKey() + "--" + ent.getValue());
+//			}
+		}
+		LOG.info("-------------------------------------");
+		
+	}
+
+	public GroundTruthProvider getCopy() {
+		final GroundTruthProvider copy = new GroundTruthProviderFileBased();
+		copy.document = new ArrayList<>(this.document);
+		return copy;
+	}
 }

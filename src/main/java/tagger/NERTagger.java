@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -145,14 +146,6 @@ public class NERTagger {
 		return result;
 	}
 
-//	private static boolean isValidNerTag(Node childNode) {
-//		if (NER_TAG.resolve(childNode.getTextContent()) != null) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-
 	/**
 	 * Only used for parsing Stanford CoreNlp XML result
 	 * @param node
@@ -184,8 +177,80 @@ public class NERTagger {
 			}else{
 				offset += Math.abs(diff-tagLength);
 			}
-			
+
 		}
 		return result.toString();
+	}
+
+	public static String runTaggerStringWithoutHeadRoleReplacement(String plainText, Set<String> headRoles) {
+		StringBuilder result = new StringBuilder(plainText); 
+		final Map<Integer, NerTag> nerXmlParser = nerXmlParserWithoutHeadRoleReplacement(runTaggerXML(plainText),headRoles);
+		int offset = 0;
+		for(NerTag tag:nerXmlParser.values()){
+			result.replace(tag.getStartPosition()+offset, tag.getEndPosition()+offset, "<"+tag.getNerTag().text+">");
+			int diff = tag.getEndPosition()-tag.getStartPosition();
+			int tagLength = 2+tag.getNerTag().text.length();
+			if(diff>=tagLength){
+				offset -= Math.abs(diff-tagLength);
+			}else{
+				offset += Math.abs(diff-tagLength);
+			}
+
+		}
+		return result.toString();
+	}
+
+	public static Map<Integer, NerTag> nerXmlParserWithoutHeadRoleReplacement(String xml, Set<String> headRoles) {
+		try {
+			Map<Integer, NerTag> result = new LinkedHashMap<>();
+			final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+			final org.w3c.dom.Document document = docBuilder
+					.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+
+			final NodeList nodeList = document.getElementsByTagName("*");
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				boolean doNotConsiderFlag = false;
+				final Node node = nodeList.item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE && isATokenTag(node)) {
+
+					String word = null;
+					String nerTag = null;
+					int startPosition = 0;
+					int endPosition = 0;
+
+					if (node.hasChildNodes()) {
+						for (int j = 0; j < node.getChildNodes().getLength(); j++) {
+							final Node childNode = node.getChildNodes().item(j);
+
+							if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+								if (childNode.getNodeName().equals("word")) {
+									word = childNode.getTextContent();
+									if(headRoles.contains(word)){
+										doNotConsiderFlag = true;
+										break;
+									}
+								} else if (childNode.getNodeName().equals("NER")) {
+									nerTag = childNode.getTextContent();
+								} else if (childNode.getNodeName().equals("CharacterOffsetBegin")) {
+									startPosition = Integer.parseInt(childNode.getTextContent());
+								} else if (childNode.getNodeName().equals("CharacterOffsetEnd")) {
+									endPosition = Integer.parseInt(childNode.getTextContent());
+								}
+							}
+						}
+					}
+					if(!doNotConsiderFlag){
+						result.put(startPosition, new NerTag(word, NER_TAG.resolve(nerTag), startPosition, endPosition));
+					}
+				}
+			}
+			result = aggregateTagPositions(result);
+			result = filterOnlyValidNerTags(result);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
