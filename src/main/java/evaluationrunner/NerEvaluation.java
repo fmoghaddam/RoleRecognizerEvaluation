@@ -19,7 +19,6 @@ import metrics.Precision;
 import metrics.Recall;
 import model.Category;
 import model.NerTag;
-import model.Position;
 import model.Role;
 import model.TagPosition;
 import model.TagPositions;
@@ -117,9 +116,15 @@ public class NerEvaluation {
 		resetMetrics();
 		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
-			
+
+//			System.out.println(groundTruthFile.getFullContentPlain());
+//			System.out.println(groundTruthFile.getFullContentNerTaggedStatistic());
+//			System.out.println(groundTruthFile.getFullContentNerTagged());
+//			System.out.println(groundTruthFile.getFullContentNerTaggedStatistic());
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
 			groundTruthFile.executeFullContentNerStatistic(originalRoleProvider.getOnlyHeadRoleMap().keySet());
+//			System.out.println(groundTruthFile.getFullContentNerTagged());
+//			System.out.println(groundTruthFile.getFullContentNerTaggedStatistic());
 
 			final TagPositions tagPositions = new TagPositions();
 			final String nerTaggedFullText = groundTruthFile.getFullContentNerTagged();
@@ -145,7 +150,7 @@ public class NerEvaluation {
 					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
 					for (final Role role : groundTruthFileCopy) {
 						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicatePosition.contains(role.getHeadRolePosition())) {
+							if (convertedPosition.contains(role.getHeadRolePosition())) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
@@ -177,25 +182,53 @@ public class NerEvaluation {
 
 	private TagPosition convertPosition(TagPosition candicatePosition, GroundTruthFile groundTruthFile) {
 		final Map<Integer, NerTag> statistic = groundTruthFile.getFullContentNerTaggedStatistic();
+		final int staticOffset = candicatePosition.getTag().indexOf('<'); 
 		int offset = 0;
-		for(Entry<Integer, NerTag> entry:statistic.entrySet()){
-			
-			if((entry.getKey()+offset)==candicatePosition.getStartIndex()){				
-				final TagPosition result = new TagPosition(entry.getValue().getWord(),entry.getKey(), entry.getValue().getEndPosition());
-				return result; 
-			}else{
-				final NerTag tag = entry.getValue();
-				int diff = tag.getEndPosition()-tag.getStartPosition();
-				int tagLength = 2+tag.getNerTag().text.length();
-				if(diff>=tagLength){
-					offset += Math.abs(diff-tagLength);
+		if(staticOffset==-1){
+			for(Entry<Integer, NerTag> entry:statistic.entrySet()){
+				if((entry.getKey()-offset)>candicatePosition.getStartIndex()){				
+					final int start = candicatePosition.getStartIndex()+offset;
+					final TagPosition result = new TagPosition(candicatePosition.getTag(),start, start+candicatePosition.getLength());
+					return result; 
 				}else{
-					offset -= Math.abs(diff-tagLength);
+					final NerTag tag = entry.getValue();
+					int diff = tag.getEndPosition()-tag.getStartPosition();
+					int tagLength = 2+tag.getNerTag().text.length();
+					if(diff>=tagLength){
+						offset += Math.abs(diff-tagLength);
+					}else{
+						offset -= Math.abs(diff-tagLength);
+					}
 				}
 			}
-			System.err.println(entry.getValue().getStartPosition()+" "+entry.getValue().getEndPosition()+" "+entry.getValue().getWord()+" "+offset);
+			final int start = candicatePosition.getStartIndex()+offset;
+			final TagPosition result = new TagPosition(candicatePosition.getTag(),start, start+candicatePosition.getLength());
+			return result;
+		}
+		else{
+			for(Entry<Integer, NerTag> entry:statistic.entrySet()){
+				//System.err.println((entry.getKey()+offset)+"--"+(candicatePosition.getStartIndex()+staticOffset));
+				//System.err.println(entry.getKey()-offset+"--"+(entry.getKey()-offset+entry.getValue().getNerTag().text.length()+2)+"--"+entry.getValue().getNerTag());
+				if((entry.getKey()-offset)==candicatePosition.getStartIndex()+staticOffset){				
+					final int start = entry.getKey()-staticOffset;
+					final TagPosition result = new TagPosition(candicatePosition.getTag(),start, start+candicatePosition.getLength()-1);
+					return result; 
+				}else{
+					final NerTag tag = entry.getValue();
+					int diff = tag.getEndPosition()-tag.getStartPosition();
+					int tagLength = 2+tag.getNerTag().text.length();
+					if(diff>=tagLength){
+						offset += Math.abs(diff-tagLength);
+					}else{
+						offset -= Math.abs(diff-tagLength);
+					}
+				}
+				//System.err.println(entry.getValue().getStartPosition()+" "+entry.getValue().getEndPosition()+" "+entry.getValue().getWord()+" "+offset);
+			}
 		}
 
+		System.err.println(candicatePosition);
+		System.err.println(groundTruthFile.getTitle());
 		return null;
 	}
 

@@ -88,6 +88,7 @@ public class GroundTruthFile {
 			if(fullContentPlain==null){
 				throw new IllegalArgumentException("fullContentPlain is null");
 			}
+			//fullContentNerTaggedStatistic = NERTagger.nerXmlParserWithoutHeadRoleReplacement(NERTagger.runTaggerXML(fullContentPlain),headRoles);
 			fullContentNerTaggedStatistic = NERTagger.nerXmlParserWithoutHeadRoleReplacement(NERTagger.runTaggerXML(fullContentPlain),headRoles);
 		}
 	}

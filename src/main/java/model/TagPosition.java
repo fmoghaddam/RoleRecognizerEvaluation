@@ -38,4 +38,8 @@ public class TagPosition extends Position {
 			return false;
 		}
 	}
+
+	public int getLength() {
+		return getEndIndex()-getStartIndex();
+	}
 }
