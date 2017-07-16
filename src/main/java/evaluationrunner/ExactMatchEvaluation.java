@@ -152,6 +152,7 @@ public class ExactMatchEvaluation {
 	 * Test dictionary completeness by checking all the roles from ground truth
 	 * against the dictionary. This function use CASE INSENSITIVE dictionary.
 	 */
+	@Deprecated
 	public void DictionaryCompletenessHeadRoleTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
@@ -174,6 +175,7 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
+	@Deprecated
 	public void DictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
@@ -202,6 +204,7 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
+	@Deprecated
 	public void DictionaryCompletenessRolePhraseTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
@@ -361,6 +364,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * Just try to find a role and does not check it's category Case Insensitive
 	 */
+	@Deprecated
 	public void roleDetectionTestCaseInSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
@@ -420,6 +424,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * First try to find a role and then check it's category. Case Insensitive
 	 */
+	@Deprecated
 	public void roleDitectionAndCategorizationTestCaseInSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {

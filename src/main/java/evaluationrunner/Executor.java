@@ -21,7 +21,20 @@ public class Executor {
 		
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
-		final NerEvaluation nere = new NerEvaluation(originalRoleProvider,groundTruthProvider);
+		
+		exm.DictionaryCompletenessHeadRoleTestCaseSensitive();
+		exm.DictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
+		
+		exm.DictionaryCompletenessRolePhraseTestCaseSensitive();
+		exm.DictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
+		
+		exm.roleDetectionTestCaseSensitive();
+		
+		
+		
+		//final NerEvaluation nere = new NerEvaluation(originalRoleProvider,groundTruthProvider);
+		//nere.roleDetectionTestCaseSensitive();
+		
 //		exm.DictionaryCompletenessHeadRoleTestCaseSensitive();
 //		exm.DictionaryCompletenessHeadRoleTestCaseInsensitive();
 //		exm.DictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
@@ -37,7 +50,7 @@ public class Executor {
 		//nere.DictionaryCompletenessHeadRoleTestCaseSensitive();
 		//nere.DictionaryCompletenessRolePhraseTestCaseSensitive();
 		
-		nere.roleDetectionTestCaseSensitive();
+		
 	}
 
 }
