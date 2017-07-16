@@ -275,8 +275,6 @@ public class NerEvaluation {
 				}
 				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
 						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
-					
-					
 					continue;
 				}
 				String regexPattern = "(?m)";
@@ -315,6 +313,9 @@ public class NerEvaluation {
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
 									tagPositions.add(candicatePosition);
+									for(int i=0;i<dictionaryCategories.size()-1;i++){
+										precision.addFalsePositive();
+									}
 									break;
 								} else {
 									precision.addFalsePositive();

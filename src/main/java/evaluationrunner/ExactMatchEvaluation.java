@@ -342,6 +342,11 @@ public class ExactMatchEvaluation {
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
 									tagPositions.add(candicatePosition);
+									
+									for(int i=0;i<dictionaryCategories.size()-1;i++){
+										precision.addFalsePositive();
+									}
+									
 									break;
 								} else {
 									precision.addFalsePositive();
