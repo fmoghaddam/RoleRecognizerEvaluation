@@ -27,6 +27,12 @@ public class TagPosition extends Position {
 		} else if (otherPosition.getEndIndex() >= this.getStartIndex()
 				&& otherPosition.getEndIndex() <= this.getEndIndex()) {
 			return true;
+		} else if (this.getStartIndex() >= otherPosition.getStartIndex()
+				&& this.getStartIndex() <= otherPosition.getEndIndex()) {
+			return true;
+		} else if (this.getEndIndex() >= otherPosition.getStartIndex()
+				&& this.getEndIndex() <= otherPosition.getEndIndex()) {
+			return true;
 		}
 		return false;
 	}

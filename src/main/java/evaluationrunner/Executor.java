@@ -15,24 +15,29 @@ public class Executor {
 		originalRoleProvider.loadRoles();
 		groundTruthProvider.loadData();
 
-		groundTruthProvider.printStatistic();
-		groundTruthProvider.printStatisticRolePhrase();
-		groundTruthProvider.printStatisticHeadRole();
+//		groundTruthProvider.printStatistic();
+//		groundTruthProvider.printStatisticRolePhrase();
+//		groundTruthProvider.printStatisticHeadRole();
 		
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
 		
-		exm.DictionaryCompletenessHeadRoleTestCaseSensitive();
-		exm.DictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
-		
-		exm.DictionaryCompletenessRolePhraseTestCaseSensitive();
-		exm.DictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-		
-		exm.roleDetectionTestCaseSensitive();
-		
+//		exm.dictionaryCompletenessHeadRoleTestCaseSensitive();
+//		exm.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
+//		exm.dictionaryCompletenessRolePhraseTestCaseSensitive();
+//		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
+//		exm.roleDetectionTestCaseSensitive();
+		exm.roleDitectionAndCategorizationTestCaseSensitive();
 		
 		
-		//final NerEvaluation nere = new NerEvaluation(originalRoleProvider,groundTruthProvider);
+		final NerEvaluation nerEvaluator = new NerEvaluation(originalRoleProvider,groundTruthProvider);
+//		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
+//		nerEvaluator.roleDetectionTestCaseSensitive();
+		nerEvaluator.roleDetectionTestCategoryCaseSensitive();		
+		
 		//nere.roleDetectionTestCaseSensitive();
 		
 //		exm.DictionaryCompletenessHeadRoleTestCaseSensitive();

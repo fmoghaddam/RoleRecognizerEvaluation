@@ -48,7 +48,7 @@ public class ExactMatchEvaluation {
 	 * Test dictionary completeness by checking all the roles from ground truth
 	 * against the dictionary. This function use CASE SENSITIVE dictionary.
 	 */
-	public void DictionaryCompletenessHeadRoleTestCaseSensitive() {
+	public void dictionaryCompletenessHeadRoleTestCaseSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
@@ -70,7 +70,7 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
-	public void DictionaryCompletenessHeadRoleCategoryTestCaseSensitive() {
+	public void dictionaryCompletenessHeadRoleCategoryTestCaseSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
@@ -98,7 +98,7 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
-	public void DictionaryCompletenessRolePhraseTestCaseSensitive() {
+	public void dictionaryCompletenessRolePhraseTestCaseSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
@@ -120,7 +120,7 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
-	public void DictionaryCompletenessRolePhraseCategoryTestCaseSensitive() {
+	public void dictionaryCompletenessRolePhraseCategoryTestCaseSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
@@ -305,10 +305,10 @@ public class ExactMatchEvaluation {
 			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
-				final String dictionaryRole = roleEntity.getKey();
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
 				final Set<Category> dictionaryCategories = roleEntity.getValue();
 
-				final Pattern pattern = Pattern.compile("(?m)" + dictionaryRole);
+				final Pattern pattern = Pattern.compile("(?m)" + "\\b"+dictionaryRole+ "\\b");
 				final Matcher matcher = pattern.matcher(originalFullText);
 
 				while (matcher.find()) {
