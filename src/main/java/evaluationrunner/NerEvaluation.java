@@ -428,6 +428,7 @@ public class NerEvaluation {
 					newSet.addAll(categories);
 					nerDictinary.put(nerTaggedResult, newSet);
 				}
+				//System.err.println(nerTaggedResult);
 			} catch (ClassCastException e) {
 				e.printStackTrace();
 			}
