@@ -78,7 +78,9 @@ public class NerEvaluation {
 		LOG.info("DictionaryCompletenessHeadRoleCategoryTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -104,7 +106,9 @@ public class NerEvaluation {
 		LOG.info("DictionaryCompletenessHeadRoleTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -136,7 +140,9 @@ public class NerEvaluation {
 		LOG.info("DictionaryCompletenessRolePhraseCategoryTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -161,7 +167,9 @@ public class NerEvaluation {
 		LOG.info("DictionaryCompletenessRolePhraseTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -180,9 +188,26 @@ public class NerEvaluation {
 			for (final Entry<String, Set<Category>> roleEntity : generatedNerDictionary
 					.entrySet()) {
 
-				final String dictionaryRole = roleEntity.getKey();
-
-				final Pattern pattern = Pattern.compile("(?m)" +dictionaryRole);
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
+				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
+					continue;
+				}
+				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
+						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
+					
+					
+					continue;
+				}
+				String regexPattern = "(?m)";
+				if(dictionaryRole.charAt(0)!='<'){
+					regexPattern +="\\b";
+				}
+				regexPattern +=dictionaryRole;
+				if(dictionaryRole.charAt(dictionaryRole.length()-1)!='>'){
+					regexPattern +="\\b";
+				}
+				
+				final Pattern pattern = Pattern.compile("(?m)" +regexPattern);
 				final Matcher matcher = pattern.matcher(nerTaggedFullText);
 
 				while (matcher.find()) {
@@ -223,7 +248,9 @@ public class NerEvaluation {
 		LOG.info("roleDetectionTestCaseSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 	
@@ -316,7 +343,9 @@ public class NerEvaluation {
 		LOG.info("roleDetectionTestCategoryCaseSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 

@@ -66,7 +66,9 @@ public class ExactMatchEvaluation {
 		LOG.info("DictionaryCompletenessHeadRoleTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -94,7 +96,9 @@ public class ExactMatchEvaluation {
 		LOG.info("DictionaryCompletenessHeadRoleCategoryTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -116,7 +120,9 @@ public class ExactMatchEvaluation {
 		LOG.info("DictionaryCompletenessRolePhrase Test case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -144,7 +150,9 @@ public class ExactMatchEvaluation {
 		LOG.info("DictionaryCompletenessRolePhraseCategoryTest case sensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -246,9 +254,9 @@ public class ExactMatchEvaluation {
 			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
-				final String dictionaryRole = roleEntity.getKey();
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
 
-				final Pattern pattern = Pattern.compile("(?m)" + dictionaryRole);
+				final Pattern pattern = Pattern.compile("(?m)" + "\\b"+dictionaryRole+ "\\b");
 				final Matcher matcher = pattern.matcher(originalFullText);
 
 				while (matcher.find()) {
@@ -288,7 +296,9 @@ public class ExactMatchEvaluation {
 		LOG.info("roleDetectionTestCaseSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
@@ -357,7 +367,9 @@ public class ExactMatchEvaluation {
 		LOG.info("roleDitectionAndCategorizationTestCaseSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 
