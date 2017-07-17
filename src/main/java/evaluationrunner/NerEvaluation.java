@@ -539,6 +539,5 @@ public class NerEvaluation {
 		LOG.info("Total values realted to PRESIDENT AND POPE AND KING  category = "+presdientPopeKing);
 		LOG.info("Total values realted to POPE AND CEO AND KING  category = "+popeCeoKing);
 		LOG.info("Total values realted to PRESDIENT AND CEO AND KING  category = "+presdientCeoKing);
-		System.exit(1);
 	}
 }

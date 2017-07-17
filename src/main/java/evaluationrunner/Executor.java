@@ -15,10 +15,11 @@ public class Executor {
 		originalRoleProvider.loadRoles();		
 		groundTruthProvider.loadData();
 
-		groundTruthProvider.printStatistic();
-		groundTruthProvider.printStatisticRolePhrase();
-		groundTruthProvider.printStatisticHeadRole();
+//		groundTruthProvider.printStatistic();
+//		groundTruthProvider.printStatisticRolePhrase();
+//		groundTruthProvider.printStatisticHeadRole();
 		
+//		originalRoleProvider.printFullStatisticCaseInSensitive();
 		
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
@@ -28,7 +29,7 @@ public class Executor {
 //		exm.dictionaryCompletenessRolePhraseTestCaseSensitive();
 //		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
 //		exm.roleDetectionTestCaseSensitive();
-		exm.roleDitectionAndCategorizationTestCaseSensitive();
+//		exm.roleDitectionAndCategorizationTestCaseSensitive();
 		
 		
 		final NerEvaluation nerEvaluator = new NerEvaluation(originalRoleProvider,groundTruthProvider);

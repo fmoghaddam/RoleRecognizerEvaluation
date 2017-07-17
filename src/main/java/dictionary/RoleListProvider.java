@@ -32,7 +32,7 @@ public abstract class RoleListProvider {
 		}
 	}
 
-	public void printFullStatistic() {
+	public void printFullStatisticCaseSensitive() {
 		LOG.info("Size of Dictionary = "+roleMapCaseSensitive.size());
 		int ceoCount = 0;
 		int popeCount = 0;
@@ -127,6 +127,104 @@ public abstract class RoleListProvider {
 		LOG.info("Total values realted to PRESIDENT AND POPE AND KING  category = "+presdientPopeKing);
 		LOG.info("Total values realted to POPE AND CEO AND KING  category = "+popeCeoKing);
 		LOG.info("Total values realted to PRESDIENT AND CEO AND KING  category = "+presdientCeoKing);
+	}
+	
+	public void printFullStatisticCaseInSensitive() {
+		LOG.info("Size of Dictionary = "+roleMapCaseInsensitive.size());
+		int ceoCount = 0;
+		int popeCount = 0;
+		int presidentCount = 0;
+		int kingCount = 0;
+		int presidentPopeCount = 0;
+		int presidentCEOCount = 0;
+		int presidentKingCount = 0;
+		int ceoKingCount = 0;
+		int popeCeoCount = 0;
+		int popeKingCount = 0;
+		int presdientPopeCeo = 0;
+		int presdientPopeKing = 0;
+		int popeCeoKing = 0;
+		int presdientCeoKing = 0;
+		int size = 0;
+		for (Entry<String, Set<Category>> entry : roleMapCaseInsensitive.entrySet()) {
+			Set<Category> categories = entry.getValue();
+			if(categories.size()>size){
+				size= categories.size();
+			}
+			if(categories.contains(Category.CEO_TAG)){
+				ceoCount++;
+			}
+			if(categories.contains(Category.KING_TAG)){
+				kingCount++;
+			}
+			if(categories.contains(Category.POPE_TAG)){
+				popeCount++;
+			}
+			if(categories.contains(Category.PRESIDENT_TAG)){
+				presidentCount++;
+			}
+
+			if(categories.size()==2){
+				if(categories.contains(Category.PRESIDENT_TAG) && categories.contains(Category.POPE_TAG)){
+					presidentPopeCount++;
+					System.err.println("PRESDIENT POPE " +entry.getKey());
+				}
+				if(categories.contains(Category.PRESIDENT_TAG) && categories.contains(Category.CEO_TAG)){
+					presidentCEOCount++;
+					System.err.println("PRESIDENT CEO " +entry.getKey());
+				}
+				if(categories.contains(Category.PRESIDENT_TAG) && categories.contains(Category.KING_TAG)){
+					presidentKingCount++;
+					System.err.println("PRESDIDENT KING " +entry.getKey());
+				}
+				if(categories.contains(Category.POPE_TAG) && categories.contains(Category.CEO_TAG)){
+					popeCeoCount++;
+					System.err.println("POEP CEO " +entry.getKey());
+				}
+				if(categories.contains(Category.POPE_TAG) && categories.contains(Category.KING_TAG)){
+					popeKingCount++;
+					System.err.println("POPE KING " +entry.getKey());
+				}
+				if(categories.contains(Category.CEO_TAG) && categories.contains(Category.KING_TAG)){
+					ceoKingCount++;
+					System.err.println("CEO KING " +entry.getKey());
+				}
+			}
+			if(categories.size()==3){
+				if(categories.contains(Category.PRESIDENT_TAG) && categories.contains(Category.POPE_TAG) && categories.contains(Category.CEO_TAG)){
+					presdientPopeCeo++;
+					System.err.println("PRESIDENT POPE CEO " +entry.getKey());
+				}
+				if(categories.contains(Category.PRESIDENT_TAG) && categories.contains(Category.POPE_TAG) && categories.contains(Category.KING_TAG)){
+					System.err.println("PRESIDENT POPE KING " +entry.getKey());
+					presdientPopeKing++;
+				}
+				if(categories.contains(Category.POPE_TAG) && categories.contains(Category.CEO_TAG) && categories.contains(Category.KING_TAG)){
+					System.err.println("POPE CEO KING " +entry.getKey());
+					popeCeoKing++;
+				}
+				if(categories.contains(Category.PRESIDENT_TAG) && categories.contains(Category.CEO_TAG) && categories.contains(Category.KING_TAG)){
+					System.err.println("PRESIDENT CEO KING" +entry.getKey());
+					presdientCeoKing++;
+				}
+			}
+		}
+		LOG.info("MAX OVERLAP SIZE = "+size);
+		LOG.info("Total values realted to CEO category = "+ceoCount);
+		LOG.info("Total values realted to KING category = "+kingCount);
+		LOG.info("Total values realted to PRESIDENT category = "+presidentCount);
+		LOG.info("Total values realted to POPE category = "+popeCount);
+		LOG.info("Total values realted to PRESDIENT AND POPE category = "+presidentPopeCount);
+		LOG.info("Total values realted to PRESDIENT AND CEO category = "+presidentCEOCount);
+		LOG.info("Total values realted to PRESDIENT AND KING category = "+presidentKingCount);
+		LOG.info("Total values realted to POPE AND CEO category = "+popeCeoCount);
+		LOG.info("Total values realted to POPE AND KING category = "+popeKingCount);
+		LOG.info("Total values realted to CEO AND KING category = "+ceoKingCount);
+		LOG.info("Total values realted to PRESIDENT AND POPE AND CEO category = "+presdientPopeCeo);
+		LOG.info("Total values realted to PRESIDENT AND POPE AND KING  category = "+presdientPopeKing);
+		LOG.info("Total values realted to POPE AND CEO AND KING  category = "+popeCeoKing);
+		LOG.info("Total values realted to PRESDIENT AND CEO AND KING  category = "+presdientCeoKing);
+		System.exit(1);
 	}
 
 	public Map<String, Set<Category>> getRoleMapCaseSensitive() {
