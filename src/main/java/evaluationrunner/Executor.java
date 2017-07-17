@@ -12,12 +12,13 @@ public class Executor {
 		final RoleListProvider originalRoleProvider = new RoleListProviderFileBased();
 		final GroundTruthProvider groundTruthProvider = new GroundTruthProviderFileBased();
 
-		originalRoleProvider.loadRoles();
+		originalRoleProvider.loadRoles();		
 		groundTruthProvider.loadData();
 
-//		groundTruthProvider.printStatistic();
-//		groundTruthProvider.printStatisticRolePhrase();
-//		groundTruthProvider.printStatisticHeadRole();
+		groundTruthProvider.printStatistic();
+		groundTruthProvider.printStatisticRolePhrase();
+		groundTruthProvider.printStatisticHeadRole();
+		
 		
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
