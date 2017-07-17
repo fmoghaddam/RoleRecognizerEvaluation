@@ -84,6 +84,40 @@ public class NerEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
+	public void dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
+		resetMetrics();
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
+				final String candicateText = entry.getHeadRole();
+
+				final String convretedToNerText = NERTagger.runTaggerString(candicateText);
+
+				final Set<Category> categories = generatedNerDictionary.get(convretedToNerText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					final boolean hasIntesection = categories.contains(category);
+					if (hasIntesection) {
+						precision.addTruePositive();
+						recall.addTruePositive();
+					} else {
+						precision.addFalsePositive();
+					}
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessHeadRoleCategoryTest case Insensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
+
 	public void dictionaryCompletenessHeadRoleTestCaseSensitive() {
 		resetMetrics();
 		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
@@ -104,6 +138,35 @@ public class NerEvaluation {
 
 		}
 		LOG.info("DictionaryCompletenessHeadRoleTest case sensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
+
+	
+	public void dictionaryCompletenessHeadRoleTestCaseInsensitive() {
+		resetMetrics();
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final String candicateText = entry.getHeadRole();
+
+				final String convretedToNerText = NERTagger.runTaggerString(candicateText);
+
+				final Set<Category> categories = generatedNerDictionary.get(convretedToNerText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					precision.addTruePositive();
+					recall.addTruePositive();
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessHeadRoleTest case Insensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
@@ -146,6 +209,41 @@ public class NerEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
+	
+	public void dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive() {
+		resetMetrics();
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
+				final String candicateText = entry.getRolePhrase();
+
+				final String convretedToNerText = NERTagger.runTaggerString(candicateText);
+
+				final Set<Category> categories = generatedNerDictionary.get(convretedToNerText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					final boolean hasIntesection = categories.contains(category);
+					if (hasIntesection) {
+						precision.addTruePositive();
+						recall.addTruePositive();
+					} else {
+						precision.addFalsePositive();
+					}
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessRolePhraseCategoryTest case Insensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
+
 	public void dictionaryCompletenessRolePhraseTestCaseSensitive() {
 		resetMetrics();
 		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
@@ -165,6 +263,33 @@ public class NerEvaluation {
 			}
 		}
 		LOG.info("DictionaryCompletenessRolePhraseTest case sensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
+
+	public void dictionaryCompletenessRolePhraseTestCaseInsensitive() {
+		resetMetrics();
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final String candicateText = entry.getRolePhrase();
+
+				final String convretedToNerText = NERTagger.runTaggerString(candicateText);
+
+				final Set<Category> categories = generatedNerDictionary.get(convretedToNerText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					precision.addTruePositive();
+					recall.addTruePositive();
+				}
+			}
+		}
+		LOG.info("DictionaryCompletenessRolePhraseTest case Insensitive:");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
@@ -254,6 +379,87 @@ public class NerEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 	
+	public void roleDetectionTestCaseInsensitive() {
+		resetMetrics();
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+
+			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
+			groundTruthFile.executeFullContentNerStatistic(originalRoleProvider.getOnlyHeadRoleMap().keySet());
+
+			final TagPositions tagPositions = new TagPositions();
+			final String nerTaggedFullText = groundTruthFile.getFullContentNerTagged();
+			final List<Role> groundTruthFileCopy = groundTruthFile.getRoles();
+			final List<Role> groundTruthFileCopyTemp = groundTruthFile.getRoles();
+			for (final Entry<String, Set<Category>> roleEntity : generatedNerDictionary
+					.entrySet()) {
+
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
+				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
+					continue;
+				}
+				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
+						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
+					
+					
+					continue;
+				}
+				String regexPattern = "(?im)";
+				if(dictionaryRole.charAt(0)!='<'){
+					regexPattern +="\\b";
+				}
+				regexPattern +=dictionaryRole;
+				if(dictionaryRole.charAt(dictionaryRole.length()-1)!='>'){
+					regexPattern +="\\b";
+				}
+				
+				final Pattern pattern = Pattern.compile("(?m)" +regexPattern);
+				final Matcher matcher = pattern.matcher(nerTaggedFullText);
+
+				while (matcher.find()) {
+					final String candicate = matcher.group(0);
+					final TagPosition candicatePosition = new TagPosition(candicate, matcher.start(), matcher.end());
+					if (tagPositions.alreadyExist(candicatePosition)) {
+						continue;
+					}
+					groundTruthFileCopy.clear();
+					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
+					boolean found = false;
+					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
+					for (final Role role : groundTruthFileCopy) {
+						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
+							if (convertedPosition.contains(role.getHeadRolePosition())) {
+								precision.addTruePositive();
+								recall.addTruePositive();
+								groundTruthFileCopyTemp.remove(role);
+								found = true;
+								tagPositions.add(candicatePosition);
+								break;
+							} else {
+								precision.addFalsePositive();
+								found = true;
+								break;
+							}
+						}
+					}
+					if (!found) {
+						precision.addFalsePositive();
+					}
+				}
+			}
+			for (int i = 0; i < groundTruthFileCopyTemp.size(); i++) {
+				recall.addFalseNegative();
+			}
+		}
+		LOG.info("roleDetectionTestCaseInSensitive :");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
+
 	public void roleDetectionTestCategoryCaseSensitive() {
 		resetMetrics();
 		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
@@ -342,6 +548,102 @@ public class NerEvaluation {
 			}
 		}
 		LOG.info("roleDetectionTestCategoryCaseSensitive :");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
+
+	public void roleDetectionTestCategoryCaseInsensitive() {
+		resetMetrics();
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+
+			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
+			groundTruthFile.executeFullContentNerStatistic(originalRoleProvider.getOnlyHeadRoleMap().keySet());
+
+			final TagPositions tagPositions = new TagPositions();
+			final String nerTaggedFullText = groundTruthFile.getFullContentNerTagged();
+			final List<Role> groundTruthFileCopy = groundTruthFile.getRoles();
+			final List<Role> groundTruthFileCopyTemp = groundTruthFile.getRoles();
+			for (final Entry<String, Set<Category>> roleEntity : generatedNerDictionary
+					.entrySet()) {
+
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
+				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
+					continue;
+				}
+				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
+						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
+					continue;
+				}
+				String regexPattern = "(?m)";
+				if(dictionaryRole.charAt(0)!='<'){
+					regexPattern +="\\b";
+				}
+				regexPattern +=dictionaryRole;
+				if(dictionaryRole.charAt(dictionaryRole.length()-1)!='>'){
+					regexPattern +="\\b";
+				}
+				
+				final Set<Category> dictionaryCategories = roleEntity.getValue();
+				
+				final Pattern pattern = Pattern.compile("(?im)" +regexPattern);
+				final Matcher matcher = pattern.matcher(nerTaggedFullText);
+
+				while (matcher.find()) {
+					final String candicate = matcher.group(0);
+					final TagPosition candicatePosition = new TagPosition(candicate, matcher.start(), matcher.end());
+					if (tagPositions.alreadyExist(candicatePosition)) {
+						continue;
+					}
+					groundTruthFileCopy.clear();
+					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
+					boolean found = false;
+					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
+					for (final Role role : groundTruthFileCopy) {
+						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
+							if (convertedPosition.contains(role.getHeadRolePosition())) {
+								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
+								final Set<Category> intesection = hasIntersection(
+										new HashSet<>(Arrays.asList(category)), dictionaryCategories);
+								if (intesection != null && !intesection.isEmpty()) {
+									precision.addTruePositive();
+									recall.addTruePositive();
+									groundTruthFileCopyTemp.remove(role);
+									found = true;
+									tagPositions.add(candicatePosition);
+									for(int i=0;i<dictionaryCategories.size()-1;i++){
+										precision.addFalsePositive();
+									}
+									break;
+								} else {
+									precision.addFalsePositive();
+									found = true;
+									break;
+								}
+							} else {
+								precision.addFalsePositive();
+								found = true;
+								break;
+							}
+						}
+					}
+					if (!found) {
+//						if(candicate.contains("<")){
+//							System.err.println(candicate+"---"+dictionaryRole+"--"+dictionaryCategories+"--"+groundTruthFile.getTitle());
+//						}
+						precision.addFalsePositive();
+					}
+				}
+			}
+			for (int i = 0; i < groundTruthFileCopyTemp.size(); i++) {
+				recall.addFalseNegative();
+			}
+		}
+		LOG.info("roleDetectionTestCategoryCaseInSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();

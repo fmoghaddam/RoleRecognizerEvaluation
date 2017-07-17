@@ -155,17 +155,46 @@ public class ExactMatchEvaluation {
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
+	
+	public void dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive() {
+		resetMetrics();
+		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
+			for (Role entry : groundTruthFile.getRoles()) {
+				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
+				final String candicateText = entry.getRolePhrase().toLowerCase();
+				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
+				if (categories == null) {
+					recall.addFalseNegative();
+				} else {
+					final boolean hasIntesection = categories.contains(category);
+					if (hasIntesection) {
+						precision.addTruePositive();
+						recall.addTruePositive();
+					} else {
+						precision.addFalsePositive();
+					}
+				}
+			}
+
+		}
+		LOG.info("DictionaryCompletenessRolePhraseCategoryTest case INsensitive:");
+		LOG.info("Precision= " + precision.getValue());
+		LOG.info("Recall= " + recall.getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");
+	}
 
 	/**
 	 * Test dictionary completeness by checking all the roles from ground truth
 	 * against the dictionary. This function use CASE INSENSITIVE dictionary.
 	 */
-	@Deprecated
-	public void DictionaryCompletenessHeadRoleTestCaseInsensitive() {
+	public void dictionaryCompletenessHeadRoleTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
-				final String candicateText = entry.getHeadRole();
+				final String candicateText = entry.getHeadRole().toLowerCase();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -183,13 +212,12 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
-	@Deprecated
-	public void DictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
+	public void dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
-				final String candicateText = entry.getHeadRole();
+				final String candicateText = entry.getHeadRole().toLowerCase();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -212,13 +240,12 @@ public class ExactMatchEvaluation {
 		LOG.info("--------------------------------------------");
 	}
 
-	@Deprecated
-	public void DictionaryCompletenessRolePhraseTestCaseInsensitive() {
+	public void dictionaryCompletenessRolePhraseTestCaseInsensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
-				final String candicateText = entry.getRolePhrase();
+				final String candicateText = entry.getRolePhrase().toLowerCase();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -381,7 +408,6 @@ public class ExactMatchEvaluation {
 	/**
 	 * Just try to find a role and does not check it's category Case Insensitive
 	 */
-	@Deprecated
 	public void roleDetectionTestCaseInSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
@@ -441,7 +467,6 @@ public class ExactMatchEvaluation {
 	/**
 	 * First try to find a role and then check it's category. Case Insensitive
 	 */
-	@Deprecated
 	public void roleDitectionAndCategorizationTestCaseInSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {

@@ -24,20 +24,21 @@ public class Executor {
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
 		
-//		exm.dictionaryCompletenessHeadRoleTestCaseSensitive();
-//		exm.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
-//		exm.dictionaryCompletenessRolePhraseTestCaseSensitive();
+//		exm.dictionaryCompletenessHeadRoleTestCaseInsensitive();
+//		exm.dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive();
+//		exm.dictionaryCompletenessRolePhraseTestCaseInsensitive();
 //		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-//		exm.roleDetectionTestCaseSensitive();
-//		exm.roleDitectionAndCategorizationTestCaseSensitive();
+//		exm.roleDetectionTestCaseInSensitive();
+//		exm.roleDitectionAndCategorizationTestCaseInSensitive();
+		exm.roleDitectionAndCategorizationTestCaseSensitive();
 		
 		
 		final NerEvaluation nerEvaluator = new NerEvaluation(originalRoleProvider,groundTruthProvider);
-//		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseSensitive();
-//		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
-//		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseSensitive();
-//		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-//		nerEvaluator.roleDetectionTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseInsensitive();
+//		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive();
+//		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseInsensitive();
+//		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive();
+//		nerEvaluator.roleDetectionTestCaseInsensitive();
 		nerEvaluator.roleDetectionTestCategoryCaseSensitive();		
 		
 		//nere.roleDetectionTestCaseSensitive();

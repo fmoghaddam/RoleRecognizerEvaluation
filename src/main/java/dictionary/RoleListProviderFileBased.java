@@ -48,7 +48,18 @@ public class RoleListProviderFileBased extends RoleListProvider {
 		
 		sortBasedOnLength(Order.DESC);
 		
-		roleMapCaseInsensitive.putAll(new TreeMap<>(roleMapCaseSensitive));
+		for(Entry<String, Set<Category>> a:roleMapCaseSensitive.entrySet()){
+			final String role = a.getKey();
+			final Set<Category> set = a.getValue();
+			final Set<Category> newSet = roleMapCaseInsensitive.get(role);
+			if(newSet==null){
+				roleMapCaseInsensitive.put(role, set);
+			}else{
+				newSet.addAll(set);
+				roleMapCaseInsensitive.put(role, set);
+			}
+		}
+		
 		sortBasedOnLengthCaseInsensitive(Order.DESC);
 		
 		for(Entry<String, Set<Category>> entry:roleMapCaseSensitive.entrySet()){
