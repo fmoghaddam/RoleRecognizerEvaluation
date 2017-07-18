@@ -381,7 +381,8 @@ public class NerEvaluation {
 	
 	public void roleDetectionTestCaseInsensitive() {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		//I have no idea which dictionary should I use? case sensitive or case insensitive
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
@@ -558,7 +559,7 @@ public class NerEvaluation {
 
 	public void roleDetectionTestCategoryCaseInsensitive() {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
@@ -579,7 +580,7 @@ public class NerEvaluation {
 						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
 					continue;
 				}
-				String regexPattern = "(?m)";
+				String regexPattern = "(?im)";
 				if(dictionaryRole.charAt(0)!='<'){
 					regexPattern +="\\b";
 				}
@@ -737,7 +738,7 @@ public class NerEvaluation {
 		}
 		
 		nerDictinary = MapUtil.sortByKeyDescendingNumberOfWords(nerDictinary);
-		printFullStatistic(nerDictinary);
+		//printFullStatistic(nerDictinary);
 		return nerDictinary;
 	}
 

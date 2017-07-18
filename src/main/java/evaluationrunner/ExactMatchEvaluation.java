@@ -161,7 +161,7 @@ public class ExactMatchEvaluation {
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
-				final String candicateText = entry.getRolePhrase().toLowerCase();
+				final String candicateText = entry.getRolePhrase();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -194,7 +194,7 @@ public class ExactMatchEvaluation {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
-				final String candicateText = entry.getHeadRole().toLowerCase();
+				final String candicateText = entry.getHeadRole();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -217,7 +217,7 @@ public class ExactMatchEvaluation {
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
-				final String candicateText = entry.getHeadRole().toLowerCase();
+				final String candicateText = entry.getHeadRole();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -245,7 +245,7 @@ public class ExactMatchEvaluation {
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
-				final String candicateText = entry.getRolePhrase().toLowerCase();
+				final String candicateText = entry.getRolePhrase();
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseInsensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
@@ -415,6 +415,7 @@ public class ExactMatchEvaluation {
 			final String originalFullText = groundTruthFile.getFullContentPlain();
 			final List<Role> groundTruthFileCopy = groundTruthFile.getRoles();
 			final List<Role> groundTruthFileCopyTemp = groundTruthFile.getRoles();
+			//I have no idea here, which dictionary should be used? case sensitive or case insensitive
 			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
@@ -460,20 +461,23 @@ public class ExactMatchEvaluation {
 		LOG.info("roleDetectionTestCaseInSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
-		LOG.info("--------------------------------------------");
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
+		LOG.info("--------------------------------------------");		
 	}
 
 	/**
 	 * First try to find a role and then check it's category. Case Insensitive
 	 */
-	public void roleDitectionAndCategorizationTestCaseInSensitive() {
+	public void roleDetectionAndCategorizationTestCaseInSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			final TagPositions tagPositions = new TagPositions();
 			final String originalFullText = groundTruthFile.getFullContentPlain();
 			final List<Role> groundTruthFileCopy = groundTruthFile.getRoles();
 			final List<Role> groundTruthFileCopyTemp = groundTruthFile.getRoles();
+			//I have no idea here, which dictionary should be used? case sensitive or case insensitive
 			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
@@ -529,7 +533,9 @@ public class ExactMatchEvaluation {
 		LOG.info("roleDitectionAndCategorizationTestCaseInSensitive :");
 		LOG.info("Precision= " + precision.getValue());
 		LOG.info("Recall= " + recall.getValue());
-		LOG.info("FMeasure= " + new FMeasure(precision.getValue(), recall.getValue()).getValue());
+		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
+		LOG.info("FMeasure= " + fmeasure);
+		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}
 

@@ -29,8 +29,8 @@ public class Executor {
 //		exm.dictionaryCompletenessRolePhraseTestCaseInsensitive();
 //		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
 //		exm.roleDetectionTestCaseInSensitive();
-//		exm.roleDitectionAndCategorizationTestCaseInSensitive();
-		exm.roleDitectionAndCategorizationTestCaseSensitive();
+		exm.roleDetectionTestCaseInSensitive();
+		exm.roleDetectionAndCategorizationTestCaseInSensitive();
 		
 		
 		final NerEvaluation nerEvaluator = new NerEvaluation(originalRoleProvider,groundTruthProvider);
@@ -38,8 +38,8 @@ public class Executor {
 //		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive();
 //		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseInsensitive();
 //		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive();
-//		nerEvaluator.roleDetectionTestCaseInsensitive();
-		nerEvaluator.roleDetectionTestCategoryCaseSensitive();		
+		nerEvaluator.roleDetectionTestCaseInsensitive();
+		nerEvaluator.roleDetectionTestCategoryCaseInsensitive();		
 		
 		//nere.roleDetectionTestCaseSensitive();
 		
