@@ -20,7 +20,6 @@ import metrics.Precision;
 import metrics.Recall;
 import model.Category;
 import model.NerTag;
-import model.Order;
 import model.Role;
 import model.TagPosition;
 import model.TagPositions;
@@ -495,7 +494,7 @@ public class NerEvaluation {
 				
 				final Set<Category> dictionaryCategories = roleEntity.getValue();
 				
-				final Pattern pattern = Pattern.compile("(?m)" +regexPattern);
+				final Pattern pattern = Pattern.compile(regexPattern);
 				final Matcher matcher = pattern.matcher(nerTaggedFullText);
 
 				while (matcher.find()) {
@@ -591,7 +590,7 @@ public class NerEvaluation {
 				
 				final Set<Category> dictionaryCategories = roleEntity.getValue();
 				
-				final Pattern pattern = Pattern.compile("(?im)" +regexPattern);
+				final Pattern pattern = Pattern.compile(regexPattern);
 				final Matcher matcher = pattern.matcher(nerTaggedFullText);
 
 				while (matcher.find()) {
