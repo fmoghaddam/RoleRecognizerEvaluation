@@ -693,7 +693,7 @@ public class NerEvaluation {
 				//System.err.println(entry.getKey()-offset+"--"+(entry.getKey()-offset+entry.getValue().getNerTag().text.length()+2)+"--"+entry.getValue().getNerTag());
 				if((entry.getKey()-offset)==candicatePosition.getStartIndex()+staticOffset){				
 					final int start = entry.getKey()-staticOffset;
-					final TagPosition result = new TagPosition(candicatePosition.getTag(),start, start+candicatePosition.getLength()-1);
+					final TagPosition result = new TagPosition(candicatePosition.getTag(),start, start+candicatePosition.getLength()+staticOffset-1);
 					return result; 
 				}else{
 					final NerTag tag = entry.getValue();

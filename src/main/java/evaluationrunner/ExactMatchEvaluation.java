@@ -332,7 +332,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * First try to find a role and then check it's category. Case sensitive
 	 */
-	public void roleDitectionAndCategorizationTestCaseSensitive() {
+	public void roleDetectionAndCategorizationTestCaseSensitive() {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			final TagPositions tagPositions = new TagPositions();
@@ -419,9 +419,9 @@ public class ExactMatchEvaluation {
 			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
-				final String dictionaryRole = roleEntity.getKey();
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
 
-				final Pattern pattern = Pattern.compile("(?im)" + dictionaryRole);
+				final Pattern pattern = Pattern.compile("(?im)" + "\\b"+dictionaryRole+ "\\b");
 				final Matcher matcher = pattern.matcher(originalFullText);
 
 				while (matcher.find()) {
@@ -481,10 +481,10 @@ public class ExactMatchEvaluation {
 			for (final Entry<String, Set<Category>> roleEntity : originalRoleProvider.getRoleMapCaseSensitive()
 					.entrySet()) {
 
-				final String dictionaryRole = roleEntity.getKey();
+				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
 				final Set<Category> dictionaryCategories = roleEntity.getValue();
 
-				final Pattern pattern = Pattern.compile("(?im)" + dictionaryRole);
+				final Pattern pattern = Pattern.compile("(?im)" + "\\b"+dictionaryRole+ "\\b");
 				final Matcher matcher = pattern.matcher(originalFullText);
 
 				while (matcher.find()) {
@@ -508,6 +508,11 @@ public class ExactMatchEvaluation {
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
 									tagPositions.add(candicatePosition);
+									
+									for(int i=0;i<dictionaryCategories.size()-1;i++){
+										precision.addFalsePositive();
+									}
+									
 									break;
 								} else {
 									precision.addFalsePositive();

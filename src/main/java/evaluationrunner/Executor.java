@@ -23,41 +23,25 @@ public class Executor {
 		
 		
 		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
-		
-//		exm.dictionaryCompletenessHeadRoleTestCaseInsensitive();
-//		exm.dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive();
-//		exm.dictionaryCompletenessRolePhraseTestCaseInsensitive();
+//		exm.dictionaryCompletenessHeadRoleTestCaseSensitive();
+//		exm.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
+//		exm.dictionaryCompletenessRolePhraseTestCaseSensitive();
 //		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-//		exm.roleDetectionTestCaseInSensitive();
+		exm.roleDetectionTestCaseSensitive();
+		exm.roleDetectionAndCategorizationTestCaseSensitive();
 		exm.roleDetectionTestCaseInSensitive();
 		exm.roleDetectionAndCategorizationTestCaseInSensitive();
 		
 		
 		final NerEvaluation nerEvaluator = new NerEvaluation(originalRoleProvider,groundTruthProvider);
-//		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseInsensitive();
-//		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive();
-//		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseInsensitive();
-//		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive();
+//		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseSensitive();
+//		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
+		nerEvaluator.roleDetectionTestCaseSensitive();
+		nerEvaluator.roleDetectionTestCategoryCaseSensitive();		
 		nerEvaluator.roleDetectionTestCaseInsensitive();
-		nerEvaluator.roleDetectionTestCategoryCaseInsensitive();		
-		
-		//nere.roleDetectionTestCaseSensitive();
-		
-//		exm.DictionaryCompletenessHeadRoleTestCaseSensitive();
-//		exm.DictionaryCompletenessHeadRoleTestCaseInsensitive();
-//		exm.DictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
-//		exm.DictionaryCompletenessRolePhraseTestCaseSensitive();
-//		exm.DictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-		//exm.DictionaryCompletenessTestCaseInsensitive();
-		//exm.roleDetectionTestCaseSensitive();
-		//exm.roleDetectionTestCaseInSensitive();
-		
-		//exm.roleDitectionAndCategorizationTestCaseSensitive();
-		//exm.roleDitectionAndCategorizationTestCaseInSensitive();
-		
-		//nere.DictionaryCompletenessHeadRoleTestCaseSensitive();
-		//nere.DictionaryCompletenessRolePhraseTestCaseSensitive();
-		
+		nerEvaluator.roleDetectionTestCategoryCaseInsensitive();
 		
 	}
 
