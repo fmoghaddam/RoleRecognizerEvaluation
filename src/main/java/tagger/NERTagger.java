@@ -128,7 +128,6 @@ public class NERTagger {
 			StringBuilder words = new StringBuilder(nerTag.getWord());
 			int updatedEndposition = nerTag.getEndPosition();
 			final NER_TAG tag = nerTag.getNerTag();
-
 			for (int j = i+1; j < tags.size() && tag == tags.get(j).getNerTag(); j++, i++) {
 				final NerTag nextNerTag = tags.get(j);
 				updatedEndposition = nextNerTag.getEndPosition();
@@ -225,13 +224,13 @@ public class NERTagger {
 
 							if (childNode.getNodeType() == Node.ELEMENT_NODE) {
 								if (childNode.getNodeName().equals("word")) {
-									word = childNode.getTextContent();
-									if(headRoles.contains(word)){
+									word = childNode.getTextContent();									
+								} else if (childNode.getNodeName().equals("NER")) {
+									nerTag = childNode.getTextContent();
+									if(headRoles.contains(word) && NER_TAG.resolve(nerTag)!=null){
 										doNotConsiderFlag = true;
 										break;
 									}
-								} else if (childNode.getNodeName().equals("NER")) {
-									nerTag = childNode.getTextContent();
 								} else if (childNode.getNodeName().equals("CharacterOffsetBegin")) {
 									startPosition = Integer.parseInt(childNode.getTextContent());
 								} else if (childNode.getNodeName().equals("CharacterOffsetEnd")) {

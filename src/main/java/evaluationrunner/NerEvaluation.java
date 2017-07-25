@@ -74,13 +74,13 @@ public class NerEvaluation {
 			}
 
 		}
-		LOG.info("DictionaryCompletenessHeadRoleCategoryTest case sensitive:");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("DictionaryCompletenessHeadRoleCategoryTest case sensitive:");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
@@ -114,7 +114,7 @@ public class NerEvaluation {
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void dictionaryCompletenessHeadRoleTestCaseSensitive() {
@@ -136,13 +136,13 @@ public class NerEvaluation {
 			}
 
 		}
-		LOG.info("DictionaryCompletenessHeadRoleTest case sensitive:");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("DictionaryCompletenessHeadRoleTest case sensitive:");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		////LOG.info("--------------------------------------------");
 	}
 
 	
@@ -171,7 +171,7 @@ public class NerEvaluation {
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void dictionaryCompletenessRolePhraseCategoryTestCaseSensitive() {
@@ -199,13 +199,13 @@ public class NerEvaluation {
 			}
 
 		}
-		LOG.info("DictionaryCompletenessRolePhraseCategoryTest case sensitive:");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("DictionaryCompletenessRolePhraseCategoryTest case sensitive:");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	
@@ -240,7 +240,7 @@ public class NerEvaluation {
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void dictionaryCompletenessRolePhraseTestCaseSensitive() {
@@ -261,13 +261,13 @@ public class NerEvaluation {
 				}
 			}
 		}
-		LOG.info("DictionaryCompletenessRolePhraseTest case sensitive:");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("DictionaryCompletenessRolePhraseTest case sensitive:");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void dictionaryCompletenessRolePhraseTestCaseInsensitive() {
@@ -294,7 +294,7 @@ public class NerEvaluation {
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void roleDetectionTestCaseSensitive() {
@@ -369,13 +369,13 @@ public class NerEvaluation {
 				recall.addFalseNegative();
 			}
 		}
-		LOG.info("roleDetectionTestCaseSensitive :");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("roleDetectionTestCaseSensitive :");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 	
 	public void roleDetectionTestCaseInsensitive() {
@@ -451,13 +451,13 @@ public class NerEvaluation {
 				recall.addFalseNegative();
 			}
 		}
-		LOG.info("roleDetectionTestCaseInSensitive :");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("roleDetectionTestCaseInSensitive :");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void roleDetectionTestCategoryCaseSensitive() {
@@ -547,13 +547,13 @@ public class NerEvaluation {
 				recall.addFalseNegative();
 			}
 		}
-		LOG.info("roleDetectionTestCategoryCaseSensitive :");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("roleDetectionTestCategoryCaseSensitive :");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	public void roleDetectionTestCategoryCaseInsensitive() {
@@ -643,13 +643,13 @@ public class NerEvaluation {
 				recall.addFalseNegative();
 			}
 		}
-		LOG.info("roleDetectionTestCategoryCaseInSensitive :");
-		LOG.info("Precision= " + precision.getValue());
-		LOG.info("Recall= " + recall.getValue());
+		//LOG.info("roleDetectionTestCategoryCaseInSensitive :");
+		//LOG.info("Precision= " + precision.getValue());
+		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
-		LOG.info("FMeasure= " + fmeasure);
+		//LOG.info("FMeasure= " + fmeasure);
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		LOG.info("--------------------------------------------");
+		//LOG.info("--------------------------------------------");
 	}
 
 	private Set<Category> hasIntersection(Set<Category> collect, Set<Category> dictionaryCategories) {
