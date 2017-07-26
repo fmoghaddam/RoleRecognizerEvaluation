@@ -20,6 +20,7 @@ import metrics.Precision;
 import metrics.Recall;
 import model.Category;
 import model.NerTag;
+import model.Position;
 import model.Role;
 import model.TagPosition;
 import model.TagPositions;
@@ -49,9 +50,9 @@ public class NerEvaluation {
 		originalRoleProvider = rlp;
 	}
 
-	public void dictionaryCompletenessHeadRoleCategoryTestCaseSensitive() {
+	public void dictionaryCompletenessHeadRoleCategoryTestCaseSensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
@@ -62,6 +63,7 @@ public class NerEvaluation {
 				final Set<Category> categories = generatedNerDictionary.get(convretedToNerText);
 				if (categories == null) {
 					recall.addFalseNegative();
+					//System.err.println(candicateText);
 				} else {
 					final boolean hasIntesection = categories.contains(category);
 					if (hasIntesection) {
@@ -83,9 +85,9 @@ public class NerEvaluation {
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive() {
+	public void dictionaryCompletenessHeadRoleCategoryTestCaseInsensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
@@ -117,9 +119,9 @@ public class NerEvaluation {
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void dictionaryCompletenessHeadRoleTestCaseSensitive() {
+	public void dictionaryCompletenessHeadRoleTestCaseSensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final String candicateText = entry.getHeadRole();
@@ -129,6 +131,7 @@ public class NerEvaluation {
 				final Set<Category> categories = generatedNerDictionary.get(convretedToNerText);
 				if (categories == null) {
 					recall.addFalseNegative();
+					//LOG.info(candicateText);
 				} else {
 					precision.addTruePositive();
 					recall.addTruePositive();
@@ -146,9 +149,9 @@ public class NerEvaluation {
 	}
 
 	
-	public void dictionaryCompletenessHeadRoleTestCaseInsensitive() {
+	public void dictionaryCompletenessHeadRoleTestCaseInsensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final String candicateText = entry.getHeadRole();
@@ -174,9 +177,9 @@ public class NerEvaluation {
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void dictionaryCompletenessRolePhraseCategoryTestCaseSensitive() {
+	public void dictionaryCompletenessRolePhraseCategoryTestCaseSensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
@@ -209,9 +212,9 @@ public class NerEvaluation {
 	}
 
 	
-	public void dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive() {
+	public void dictionaryCompletenessRolePhraseCategoryTestCaseInsensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final Category category = Category.resolve(entry.getXmlAttributes().get("type"));
@@ -243,9 +246,9 @@ public class NerEvaluation {
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void dictionaryCompletenessRolePhraseTestCaseSensitive() {
+	public void dictionaryCompletenessRolePhraseTestCaseSensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final String candicateText = entry.getRolePhrase();
@@ -270,9 +273,9 @@ public class NerEvaluation {
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void dictionaryCompletenessRolePhraseTestCaseInsensitive() {
+	public void dictionaryCompletenessRolePhraseTestCaseInsensitive(boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseInsensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			for (Role entry : groundTruthFile.getRoles()) {
 				final String candicateText = entry.getRolePhrase();
@@ -297,9 +300,9 @@ public class NerEvaluation {
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void roleDetectionTestCaseSensitive() {
+	public void roleDetectionTestCaseSensitive(final boolean rolePhrase, boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
@@ -313,13 +316,9 @@ public class NerEvaluation {
 					.entrySet()) {
 
 				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
-				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
-					continue;
-				}
+				//These are some exceptions
 				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
 						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
-					
-					
 					continue;
 				}
 				String regexPattern = "(?m)";
@@ -344,14 +343,20 @@ public class NerEvaluation {
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
 					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
-							if (convertedPosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (convertedPosition.contains(position)) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
 								found = true;
-								tagPositions.add(candicatePosition);
 								break;
 							} else {
 								precision.addFalsePositive();
@@ -374,14 +379,15 @@ public class NerEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		//LOG.info("--------------------------------------------");
 	}
 	
-	public void roleDetectionTestCaseInsensitive() {
+	public void roleDetectionTestCaseInsensitive(final boolean rolePhrase, boolean onlyRule) {
 		resetMetrics();
 		//I have no idea which dictionary should I use? case sensitive or case insensitive
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
@@ -395,9 +401,7 @@ public class NerEvaluation {
 					.entrySet()) {
 
 				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
-				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
-					continue;
-				}
+				//These are some exceptions
 				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
 						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
 					
@@ -426,14 +430,20 @@ public class NerEvaluation {
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
 					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
-							if (convertedPosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (convertedPosition.contains(position)) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
 								found = true;
-								tagPositions.add(candicatePosition);
 								break;
 							} else {
 								precision.addFalsePositive();
@@ -456,13 +466,14 @@ public class NerEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void roleDetectionTestCategoryCaseSensitive() {
+	public void roleDetectionTestCategoryCaseSensitive(final boolean rolePhrase, boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
@@ -476,9 +487,7 @@ public class NerEvaluation {
 					.entrySet()) {
 
 				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
-				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
-					continue;
-				}
+				//These are some exceptions
 				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
 						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
 					continue;
@@ -507,9 +516,16 @@ public class NerEvaluation {
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
 					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
-							if (convertedPosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (convertedPosition.contains(position)) {
 								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
 								final Set<Category> intesection = hasIntersection(
 										new HashSet<>(Arrays.asList(category)), dictionaryCategories);
@@ -518,7 +534,6 @@ public class NerEvaluation {
 									recall.addTruePositive();
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
-									tagPositions.add(candicatePosition);
 									for(int i=0;i<dictionaryCategories.size()-1;i++){
 										precision.addFalsePositive();
 									}
@@ -552,13 +567,14 @@ public class NerEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		//LOG.info("--------------------------------------------");
 	}
 
-	public void roleDetectionTestCategoryCaseInsensitive() {
+	public void roleDetectionTestCategoryCaseInsensitive(final boolean rolePhrase, boolean onlyRule) {
 		resetMetrics();
-		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive());
+		final Map<String, Set<Category>> generatedNerDictionary = generateNerDictionary(originalRoleProvider.getRoleMapCaseSensitive(),onlyRule);
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 
 			groundTruthFile.executeFullContentNer(originalRoleProvider.getOnlyHeadRoleMap().keySet());
@@ -572,9 +588,7 @@ public class NerEvaluation {
 					.entrySet()) {
 
 				final String dictionaryRole = roleEntity.getKey().replaceAll("\\.", "\\\\.");
-				if(dictionaryRole.charAt(0)=='<' && dictionaryRole.charAt(dictionaryRole.length()-1)=='>'){
-					continue;
-				}
+				//These are some exceptions
 				if(dictionaryRole.equalsIgnoreCase("the <LOCATION>") || 
 						dictionaryRole.equalsIgnoreCase("The <ORGANIZATION>")){
 					continue;
@@ -603,9 +617,16 @@ public class NerEvaluation {
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
 					TagPosition convertedPosition = convertPosition(candicatePosition,groundTruthFile);
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (convertedPosition.hasOverlap(role.getRolePhasePosition())) {
-							if (convertedPosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (convertedPosition.contains(position)) {
 								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
 								final Set<Category> intesection = hasIntersection(
 										new HashSet<>(Arrays.asList(category)), dictionaryCategories);
@@ -614,7 +635,6 @@ public class NerEvaluation {
 									recall.addTruePositive();
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
-									tagPositions.add(candicatePosition);
 									for(int i=0;i<dictionaryCategories.size()-1;i++){
 										precision.addFalsePositive();
 									}
@@ -648,8 +668,11 @@ public class NerEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
+		LOG.info(precision.getFalsePositive());
+		LOG.info(precision.getTruePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
-		//LOG.info("--------------------------------------------");
+		LOG.info("--------------------------------------------");
 	}
 
 	private Set<Category> hasIntersection(Set<Category> collect, Set<Category> dictionaryCategories) {
@@ -714,7 +737,7 @@ public class NerEvaluation {
 		return null;
 	}
 
-	private Map<String, Set<Category>> generateNerDictionary(Map<String, Set<Category>> originalDictionary) {
+	private Map<String, Set<Category>> generateNerDictionary(Map<String, Set<Category>> originalDictionary, boolean onlyRule) {
 		Map<String, Set<Category>> nerDictinary = new LinkedHashMap<>();
 
 		for (Entry<String, Set<Category>> entry : originalDictionary.entrySet()) {
@@ -722,7 +745,22 @@ public class NerEvaluation {
 			final Set<Category> categories = entry.getValue();
 			try {
 				final String nerTaggedResult = NERTagger.runTaggerStringWithoutHeadRoleReplacement(text,originalRoleProvider.getOnlyHeadRoleMap().keySet());
+				if(onlyRule){
+					if(
+							!nerTaggedResult.contains(">") || 
+							(nerTaggedResult.charAt(0)=='<' && nerTaggedResult.charAt(nerTaggedResult.length()-1)=='>' 
+							&& nerTaggedResult.split(" ").length==1
+									) ){
+						continue;
+					}
+				}else{
+					if(nerTaggedResult.charAt(0)=='<' && nerTaggedResult.charAt(nerTaggedResult.length()-1)=='>' 
+							&& nerTaggedResult.split(" ").length==1){
+						continue;
+					}
+				}
 				final Set<Category> set = nerDictinary.get(nerTaggedResult);
+				//LOG.info("Text,"+entry.getKey()+",ner,"+nerTaggedResult);
 				if (set == null) {
 					nerDictinary.put(nerTaggedResult, new HashSet<>(categories));
 				} else {
@@ -737,7 +775,7 @@ public class NerEvaluation {
 		}
 		
 		nerDictinary = MapUtil.sortByKeyDescendingNumberOfWords(nerDictinary);
-		//printFullStatistic(nerDictinary);
+		printFullStatistic(nerDictinary);
 		return nerDictinary;
 	}
 

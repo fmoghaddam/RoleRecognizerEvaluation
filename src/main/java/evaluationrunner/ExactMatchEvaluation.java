@@ -17,6 +17,7 @@ import metrics.FMeasure;
 import metrics.Precision;
 import metrics.Recall;
 import model.Category;
+import model.Position;
 import model.Role;
 import model.TagPosition;
 import model.TagPositions;
@@ -56,6 +57,7 @@ public class ExactMatchEvaluation {
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseSensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
+					//LOG.info(candicateText);
 				} else {
 					precision.addTruePositive();
 					recall.addTruePositive();
@@ -81,6 +83,7 @@ public class ExactMatchEvaluation {
 				final Set<Category> categories = originalRoleProvider.getRoleMapCaseSensitive().get(candicateText);
 				if (categories == null) {
 					recall.addFalseNegative();
+					//System.err.println(candicateText);
 				} else {
 					final boolean hasIntesection = categories.contains(category);
 					if (hasIntesection) {
@@ -271,7 +274,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * Just try to find a role and does not check it's category Case sensitive
 	 */
-	public void roleDetectionTestCaseSensitive() {
+	public void roleDetectionTestCaseSensitive(final boolean rolePhrase) {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			final TagPositions tagPositions = new TagPositions();
@@ -295,14 +298,20 @@ public class ExactMatchEvaluation {
 					groundTruthFileCopy.clear();
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicatePosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (candicatePosition.contains(position)) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
 								found = true;
-								tagPositions.add(candicatePosition);
 								break;
 							} else {
 								precision.addFalsePositive();
@@ -325,6 +334,7 @@ public class ExactMatchEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		//LOG.info("--------------------------------------------");
 	}
@@ -332,7 +342,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * First try to find a role and then check it's category. Case sensitive
 	 */
-	public void roleDetectionAndCategorizationTestCaseSensitive() {
+	public void roleDetectionAndCategorizationTestCaseSensitive(final boolean rolePhrase) {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			final TagPositions tagPositions = new TagPositions();
@@ -357,9 +367,16 @@ public class ExactMatchEvaluation {
 					groundTruthFileCopy.clear();
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicatePosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (candicatePosition.contains(position)) {
 								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
 								final Set<Category> intesection = hasIntersection(
 										new HashSet<>(Arrays.asList(category)), dictionaryCategories);
@@ -368,7 +385,6 @@ public class ExactMatchEvaluation {
 									recall.addTruePositive();
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
-									tagPositions.add(candicatePosition);
 									
 									for(int i=0;i<dictionaryCategories.size()-1;i++){
 										precision.addFalsePositive();
@@ -401,6 +417,7 @@ public class ExactMatchEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		//LOG.info("--------------------------------------------");
 	}
@@ -408,7 +425,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * Just try to find a role and does not check it's category Case Insensitive
 	 */
-	public void roleDetectionTestCaseInSensitive() {
+	public void roleDetectionTestCaseInSensitive(final boolean rolePhrase) {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			final TagPositions tagPositions = new TagPositions();
@@ -433,14 +450,21 @@ public class ExactMatchEvaluation {
 					groundTruthFileCopy.clear();
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicatePosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (candicatePosition.contains(position)) {
 								precision.addTruePositive();
 								recall.addTruePositive();
 								groundTruthFileCopyTemp.remove(role);
 								found = true;
-								tagPositions.add(candicatePosition);
+								
 								break;
 							} else {
 								precision.addFalsePositive();
@@ -463,6 +487,7 @@ public class ExactMatchEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		//LOG.info("--------------------------------------------");		
 	}
@@ -470,7 +495,7 @@ public class ExactMatchEvaluation {
 	/**
 	 * First try to find a role and then check it's category. Case Insensitive
 	 */
-	public void roleDetectionAndCategorizationTestCaseInSensitive() {
+	public void roleDetectionAndCategorizationTestCaseInSensitive(final boolean rolePhrase) {
 		resetMetrics();
 		for (final GroundTruthFile groundTruthFile : groundTruthProvider.getDocumnets()) {
 			final TagPositions tagPositions = new TagPositions();
@@ -496,9 +521,16 @@ public class ExactMatchEvaluation {
 					groundTruthFileCopy.clear();
 					groundTruthFileCopy.addAll(groundTruthFileCopyTemp);
 					boolean found = false;
+					tagPositions.add(candicatePosition);
 					for (final Role role : groundTruthFileCopy) {
 						if (candicatePosition.hasOverlap(role.getRolePhasePosition())) {
-							if (candicatePosition.contains(role.getHeadRolePosition())) {
+							Position position;
+							if(rolePhrase){
+								position=role.getRolePhasePosition();
+							}else{
+								position=role.getHeadRolePosition();
+							}
+							if (candicatePosition.contains(position)) {
 								final Category category = Category.resolve(role.getXmlAttributes().get("type"));
 								final Set<Category> intesection = hasIntersection(
 										new HashSet<>(Arrays.asList(category)), dictionaryCategories);
@@ -507,8 +539,6 @@ public class ExactMatchEvaluation {
 									recall.addTruePositive();
 									groundTruthFileCopyTemp.remove(role);
 									found = true;
-									tagPositions.add(candicatePosition);
-									
 									for(int i=0;i<dictionaryCategories.size()-1;i++){
 										precision.addFalsePositive();
 									}
@@ -540,6 +570,7 @@ public class ExactMatchEvaluation {
 		//LOG.info("Recall= " + recall.getValue());
 		final double fmeasure = new FMeasure(precision.getValue(), recall.getValue()).getValue();
 		//LOG.info("FMeasure= " + fmeasure);
+		//LOG.info(precision.getFalsePositive());
 		LOG.info("=SPLIT(\""+precision.getValue()+","+recall.getValue()+","+fmeasure+"\",\",\""+")");
 		LOG.info("--------------------------------------------");
 	}

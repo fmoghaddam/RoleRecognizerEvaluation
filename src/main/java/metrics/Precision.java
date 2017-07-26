@@ -22,6 +22,22 @@ public class Precision implements Metric {
 		return "Precision [truePositive=" + truePositive + ", falsePositive=" + falsePositive + "]";
 	}
 
+	public double getTruePositive() {
+		return truePositive;
+	}
+
+	public void setTruePositive(double truePositive) {
+		this.truePositive = truePositive;
+	}
+
+	public double getFalsePositive() {
+		return falsePositive;
+	}
+
+	public void setFalsePositive(double falsePositive) {
+		this.falsePositive = falsePositive;
+	}
+
 	@Override
 	public void reset() {
 		truePositive=0;

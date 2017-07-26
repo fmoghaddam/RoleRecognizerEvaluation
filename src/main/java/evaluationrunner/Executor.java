@@ -19,30 +19,39 @@ public class Executor {
 //		groundTruthProvider.printStatisticRolePhrase();
 //		groundTruthProvider.printStatisticHeadRole();
 		
-//		originalRoleProvider.printFullStatisticCaseInSensitive();
+		originalRoleProvider.printFullStatisticCaseSensitive();
+
+		final boolean useRolePhrase = false;
 		
+//		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
+//		exm.dictionaryCompletenessHeadRoleTestCaseSensitive();
+//		exm.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
+//		exm.dictionaryCompletenessRolePhraseTestCaseSensitive();
+//		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
+//		exm.roleDetectionTestCaseSensitive(useRolePhrase);
+//		exm.roleDetectionAndCategorizationTestCaseSensitive(useRolePhrase);
+//		exm.roleDetectionTestCaseInSensitive(useRolePhrase);
+//		exm.roleDetectionAndCategorizationTestCaseInSensitive(useRolePhrase);
 		
-		final ExactMatchEvaluation exm = new ExactMatchEvaluation(originalRoleProvider,groundTruthProvider);
-		exm.dictionaryCompletenessHeadRoleTestCaseSensitive();
-		exm.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
-		exm.dictionaryCompletenessRolePhraseTestCaseSensitive();
-		exm.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-		exm.roleDetectionTestCaseSensitive();
-		exm.roleDetectionAndCategorizationTestCaseSensitive();
-		exm.roleDetectionTestCaseInSensitive();
-		exm.roleDetectionAndCategorizationTestCaseInSensitive();
-		
-		
+		final NerEvaluation nerEvaluatorOnlyRule = new NerEvaluation(originalRoleProvider,groundTruthProvider);
+		nerEvaluatorOnlyRule.dictionaryCompletenessHeadRoleTestCaseSensitive(true);
+//		nerEvaluatorOnlyRule.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive(true);
+//		nerEvaluatorOnlyRule.dictionaryCompletenessRolePhraseTestCaseSensitive(true);
+//		nerEvaluatorOnlyRule.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive(true);
+//		nerEvaluatorOnlyRule.roleDetectionTestCaseSensitive(useRolePhrase,true);
+//		nerEvaluatorOnlyRule.roleDetectionTestCategoryCaseSensitive(useRolePhrase,true);		
+//		nerEvaluatorOnlyRule.roleDetectionTestCaseInsensitive(useRolePhrase,true);
+//		nerEvaluatorOnlyRule.roleDetectionTestCategoryCaseInsensitive(useRolePhrase,true);
+
 		final NerEvaluation nerEvaluator = new NerEvaluation(originalRoleProvider,groundTruthProvider);
-		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseSensitive();
-		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive();
-		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseSensitive();
-		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive();
-		nerEvaluator.roleDetectionTestCaseSensitive();
-		nerEvaluator.roleDetectionTestCategoryCaseSensitive();		
-		nerEvaluator.roleDetectionTestCaseInsensitive();
-		nerEvaluator.roleDetectionTestCategoryCaseInsensitive();
-		
+		nerEvaluator.dictionaryCompletenessHeadRoleTestCaseSensitive(false);
+//		nerEvaluator.dictionaryCompletenessHeadRoleCategoryTestCaseSensitive(false);
+//		nerEvaluator.dictionaryCompletenessRolePhraseTestCaseSensitive(false);
+//		nerEvaluator.dictionaryCompletenessRolePhraseCategoryTestCaseSensitive(false);
+//		nerEvaluator.roleDetectionTestCaseSensitive(useRolePhrase,false);
+//		nerEvaluator.roleDetectionTestCategoryCaseSensitive(useRolePhrase,false);		
+//		nerEvaluator.roleDetectionTestCaseInsensitive(useRolePhrase,false);
+//		nerEvaluator.roleDetectionTestCategoryCaseInsensitive(useRolePhrase,false);
 	}
 
 }
